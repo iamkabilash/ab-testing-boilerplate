@@ -4,8 +4,10 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack",
-    "serve": "webpack serve --mode=development"
+    "build": "webpack --mode=production",
+    "serve": "webpack serve --mode=development",
+    "start-livereload": "node livereload-server.js",
+    "dev": "npm-run-all -p -r start-livereload serve"
   },
   "repository": {
     "type": "git",
@@ -19,13 +21,29 @@
   },
   "homepage": "https://github.com/Saabbir/echo-ab-testing-boilerplate#readme",
   "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "autoprefixer": "^10.3.4",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "css-loader": "^6.2.0",
+    "livereload": "^0.9.3",
     "mini-css-extract-plugin": "^2.3.0",
     "node-sass": "^6.0.1",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.3.6",
+    "postcss-gap-properties": "^2.0.0",
+    "postcss-loader": "^6.1.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 4 versions",
+    "not ie < 9",
+    "iOS >= 9"
+  ]
 }

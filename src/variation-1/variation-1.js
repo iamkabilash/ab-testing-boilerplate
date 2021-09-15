@@ -1,11 +1,43 @@
 import "./variation-1.scss";
 
-let name = "Saabbir";
+console.log("livereload watches js, css, and scss files!");
 
-const template = `
-  <div>
-    <h1>${name}</h1>
-  </div>
-`;
+// Start Variation JS
+var TEST_NAME = {
+  init: function () {
+    // Add a test specific class to the body element
+    jQuery("body").addClass("test_specific_class_name");
 
-console.log(template);
+    this.mainCSS();
+    this.mainJS();
+  },
+  mainCSS: function () {
+    var styleEl = document.createElement("style");
+    styleEl.setAttribute("type", "text/css");
+    document.head.appendChild(styleEl).textContent = "";
+  },
+  mainJS: function () {
+    // Get reference to the jQuery object
+    var $ = jQuery;
+
+    // Test specific JavaScript code goes here
+    alert("TEST_PLAN_NAME ran successfully!");
+  },
+};
+
+(function pollingFunction() {
+  // Return if the test already ran once.
+  if (document.querySelector(".test_specific_class_name"))
+    return "Test already ran once!";
+
+  if (window.jQuery && jQuery("POLL_ELEMENT").length) {
+    // Activate test
+    TEST_NAME.init();
+
+    console.log("Test Plan: TEST_PLAN_NAME V:1.0");
+    return "Test ran successfully!";
+  } else {
+    setTimeout(pollingFunction, 25);
+    return "Test condition didn't match!";
+  }
+})(); // End Variation JS
