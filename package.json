@@ -1,7 +1,7 @@
 {
   "name": "echo-ab-testing-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "Echo A/B testing boilerplate with SCSS, Babel, LiveReload support.",
   "private": true,
   "scripts": {
     "build": "webpack --mode=production",
@@ -13,8 +13,8 @@
     "type": "git",
     "url": "git+https://github.com/Saabbir/echo-ab-testing-boilerplate.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["A/B Testing", "Boilerplate", "EchoLogyx"],
+  "author": "Saabbir",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Saabbir/echo-ab-testing-boilerplate/issues"
