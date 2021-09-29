@@ -1,7 +1,5 @@
 import "./variation-1.scss";
 
-console.log("livereload watches js, css, and scss files!");
-
 // Start Variation JS
 var TEST_NAME = {
   init: function () {
@@ -35,9 +33,7 @@ var TEST_NAME = {
     TEST_NAME.init();
 
     console.log("Test Plan: TEST_PLAN_NAME V:1.0");
-    return "Test ran successfully!";
   } else {
     setTimeout(pollingFunction, 25);
-    return "Test condition didn't match!";
   }
 })(); // End Variation JS
