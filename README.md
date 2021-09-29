@@ -21,7 +21,9 @@
 
 _Follow below steps in order_
 
-1. Clone this repo by typing following command in the terminal:
+1. Download the zip file from this link https://github.com/Saabbir/echo-ab-testing-boilerplate/archive/refs/heads/master.zip 
+
+Or you can clone this repo by typing following command in the terminal:
 
 ```sh
 git clone https://github.com/Saabbir/echo-ab-testing-boilerplate.git
