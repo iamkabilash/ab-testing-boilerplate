@@ -1,4 +1,5 @@
 const path = require("path");
+const entry = require("webpack-glob-entry");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -28,9 +29,7 @@ const cssConfig = {
 };
 
 const config = {
-  entry: {
-    "variation-1": "./src/variation-1/variation-1.js",
-  },
+  entry: entry("./src/**/*.js"),
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "dist"),

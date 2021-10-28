@@ -13,7 +13,11 @@
     "type": "git",
     "url": "git+https://github.com/Saabbir/echo-ab-testing-boilerplate.git"
   },
-  "keywords": ["A/B Testing", "Boilerplate", "EchoLogyx"],
+  "keywords": [
+    "A/B Testing",
+    "Boilerplate",
+    "EchoLogyx"
+  ],
   "author": "Saabbir",
   "license": "ISC",
   "bugs": {
@@ -38,7 +42,8 @@
     "style-loader": "^3.2.1",
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-dev-server": "^4.2.1",
+    "webpack-glob-entry": "^2.1.1"
   },
   "browserslist": [
     "> 1%",
