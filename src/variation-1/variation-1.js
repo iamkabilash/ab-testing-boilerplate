@@ -1,5 +1,7 @@
 import "./variation-1.scss";
 
+alert("Hello from Echo AB Testing Boilerplate!");
+
 // Start Variation JS
 var TEST_NAME = {
   init: function () {
@@ -19,7 +21,6 @@ var TEST_NAME = {
     var $ = jQuery;
 
     // Test specific JavaScript code goes here
-    alert("TEST_PLAN_NAME ran successfully!");
   },
 };
 
