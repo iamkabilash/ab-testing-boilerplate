@@ -6,7 +6,7 @@ alert("Hello from Echo AB Testing Boilerplate!");
 var TEST_NAME = {
   init: function () {
     // Add a test specific class to the body element
-    jQuery("body").addClass("test_specific_class_name");
+    document.body.classList.add("test_specific_class_name");
 
     this.mainCSS();
     this.mainJS();
@@ -24,7 +24,7 @@ var TEST_NAME = {
   },
 };
 
-(function pollingFunction() {
+!(function pollingFunction() {
   // Return if the test already ran once.
   if (document.querySelector(".test_specific_class_name"))
     return "Test already ran once!";
