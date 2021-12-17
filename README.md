@@ -90,6 +90,10 @@ npm run build
 
 _The build files will be found inside the dist directory. Copy necessary codes from there to use in your A/B testing tool._
 
+## Notes
+
+If your browser (Chrome/Firefox) doesn't allow to serve https resources from localhost, you can enable this feature in Chrome by going to `chrome://flags/#allow-insecure-localhost`
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
