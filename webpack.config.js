@@ -34,6 +34,7 @@ module.exports = (env, argv) => {
     ],
   };
 
+  // Global config
   const config = {
     entry: entry("./src/**/*.js"),
     output: {
@@ -45,12 +46,17 @@ module.exports = (env, argv) => {
       rules: [cssConfig],
     },
     plugins: [new MiniCssExtractPlugin()],
+    // devServer: {
+    //   https: true,
+    // },
   };
 
+  // Dev specific config
   if (argv.mode === "development") {
     config.devtool = "source-map";
   }
 
+  // Prod specific config
   if (argv.mode === "production") {
     config.module.rules.unshift(jsConfig);
     config.optimization = {
