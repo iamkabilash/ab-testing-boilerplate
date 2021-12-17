@@ -46,9 +46,9 @@ module.exports = (env, argv) => {
       rules: [cssConfig],
     },
     plugins: [new MiniCssExtractPlugin()],
-    // devServer: {
-    //   https: true,
-    // },
+    devServer: {
+      https: true,
+    },
   };
 
   // Dev specific config
