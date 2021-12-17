@@ -26,17 +26,10 @@ alert("Hello from Echo AB Testing Boilerplate!");
     preSetupEvents: function () {
       // Setup test independent/global events
       document.addEventListener("click", test.handleDocumentClicks);
-      document.addEventListener("mouseout", test.handleDocumentMouseOut);
     },
     handleDocumentClicks: function (e) {
       if (e.target.className.includes("ELEMENT_CLASS_NAME")) {
         // Do something on click of element with className ELEMENT_CLASS_NAME
-      }
-    },
-    handleDocumentMouseOut: function (e) {
-      if (!e.toElement && !e.relatedTarget && e.clientY < 10) {
-        alert("Are you sure that you want to leave?");
-        document.removeEventListener("mouseout", test.handleDocumentMouseOut);
       }
     },
     mainCSS: function () {
