@@ -7,7 +7,7 @@
     "build": "webpack --mode=production",
     "serve": "webpack serve --mode=development",
     "start-livereload": "node livereload-server.js",
-    "dev": "npm-run-all -p -r start-livereload serve"
+    "dev": "npm-run-all -p -r serve"
   },
   "repository": {
     "type": "git",
@@ -43,12 +43,16 @@
     "webpack": "^5.52.1",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1",
-    "webpack-glob-entry": "^2.1.1"
+    "webpack-glob-entry": "^2.1.1",
+    "webpack-livereload-plugin": "^3.0.2"
   },
   "browserslist": [
     "> 1%",
     "last 4 versions",
     "not ie < 9",
     "iOS >= 9"
-  ]
+  ],
+  "dependencies": {
+    "http-proxy": "^1.18.1"
+  }
 }

@@ -5,7 +5,7 @@ import "./variation-1.scss";
 alert("Hello from Echo AB Testing Boilerplate!");
 
 // Start Variation JS
-!(function loadVariation() {
+void (function loadVariation() {
   // Main variation/application code
   var test = {
     init: function () {
@@ -17,6 +17,8 @@ alert("Hello from Echo AB Testing Boilerplate!");
       test.preSetupEvents();
       test.mainCSS();
       test.mainJS();
+      test.postSetupVariables();
+      test.postSetupEvents();
     },
     preSetupVariables: function () {
       // Setup test independent/global variables
@@ -26,11 +28,6 @@ alert("Hello from Echo AB Testing Boilerplate!");
     preSetupEvents: function () {
       // Setup test independent/global events
       document.addEventListener("click", test.handleDocumentClicks);
-    },
-    handleDocumentClicks: function (e) {
-      if (e.target.className.includes("ELEMENT_CLASS_NAME")) {
-        // Do something on click of element with className ELEMENT_CLASS_NAME
-      }
     },
     mainCSS: function () {
       var styleEl = document.createElement("style");
@@ -54,6 +51,11 @@ alert("Hello from Echo AB Testing Boilerplate!");
     postSetupEvents: function () {
       // Setup test dependent events
       // test.modal.addEventListener("click", test.handleModalClick);
+    },
+    handleDocumentClicks: function (e) {
+      if (e.target.className.includes("ELEMENT_CLASS_NAME")) {
+        // Do something on click of element with className ELEMENT_CLASS_NAME
+      }
     },
   };
 

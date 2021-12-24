@@ -1,6 +1,8 @@
+const fs = require("fs");
 const path = require("path");
 const entry = require("webpack-glob-entry");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const LiveReloadPlugin = require("webpack-livereload-plugin");
 
 module.exports = (env, argv) => {
   const jsConfig = {
@@ -45,7 +47,20 @@ module.exports = (env, argv) => {
     module: {
       rules: [cssConfig],
     },
-    plugins: [new MiniCssExtractPlugin()],
+    plugins: [
+      new MiniCssExtractPlugin(),
+      new LiveReloadPlugin({
+        protocol: "https",
+        port: 35729,
+        // liveCSS: false,
+        // liveImg: false,
+        applyCSSLive: true,
+        //useSourceHash: true,
+        //ignore: /css|scss/,
+        key: fs.readFileSync(path.join(__dirname, "livereload.key"), "utf-8"),
+        cert: fs.readFileSync(path.join(__dirname, "livereload.crt"), "utf-8"),
+      }),
+    ],
     devServer: {
       https: true,
     },
