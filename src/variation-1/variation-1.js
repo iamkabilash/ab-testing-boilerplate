@@ -61,9 +61,9 @@ void (function loadVariation() {
 
   // Polling conditions
   if (
+    !document.querySelector(".test_specific_class_name") &&
     window.jQuery &&
-    jQuery("POLL_ELEMENT").length &&
-    !document.querySelector(".test_specific_class_name")
+    jQuery("POLL_ELEMENT").length
   ) {
     try {
       // Activate test
