@@ -23,7 +23,8 @@ void (function loadVariation() {
     preSetupVariables: function () {
       // Setup test independent/global variables
       test.name = "TEST_PLAN_NAME";
-      test.version = "1.0";
+      test.version = "Version 1.0";
+      test.variation = "Variation 1";
     },
     preSetupEvents: function () {
       // Setup test independent/global events
@@ -72,7 +73,7 @@ void (function loadVariation() {
       // Success log
       console.log(
         "Saabbir:",
-        `${test.name}: [Variation 1]: Version ${test.version}`
+        `${test.name}: ${test.variation}: ${test.version}`
       );
     } catch (error) {
       // Error log
