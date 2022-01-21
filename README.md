@@ -43,21 +43,21 @@ npm install
 function injectCSS() {
 	var link = document.createElement('link');
 	link.setAttribute('rel', 'stylesheet');
-	link.href = "http://localhost:8080/variation-1.css";
+	link.href = "https://localhost:8080/variation-1.css";
 	document.head.appendChild(link);
 }
 
 function injectJS() {
 	var script = document.createElement('script');
 	script.setAttribute('type', 'text/javascript');
-	script.src = "http://localhost:8080/variation-1.js";
+	script.src = "https://localhost:8080/variation-1.js";
 	document.body.appendChild(script);
 }
 
 function injectLiveReloadScript() {
 	var script = document.createElement('script');
 	script.setAttribute('type', 'text/javascript');
-	script.src = "http://localhost:35729/livereload.js?snipver=1";
+	script.src = "https://localhost:35729/livereload.js?snipver=1";
 	document.body.appendChild(script);
 }
 
