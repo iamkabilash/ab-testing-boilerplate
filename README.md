@@ -21,7 +21,7 @@
 
 _Follow below steps in order_
 
-1. Download the zip file from this link https://github.com/Saabbir/echo-ab-testing-boilerplate/archive/refs/heads/master.zip 
+1. Download the zip file from this link https://github.com/Saabbir/echo-ab-testing-boilerplate/archive/refs/heads/master.zip
 
 Or you can clone this repo by typing following command in the terminal:
 
@@ -39,33 +39,33 @@ npm install
 
 4. Once User JavaScript and CSS chrome extension has been installed, click the extension icon to setup a new script. Within the extension, copy and paste the following code into the **JS** pane and press `ctrl + s` to save the script.
 
-```sh
+```js
 function injectCSS() {
-	var link = document.createElement('link');
-	link.setAttribute('rel', 'stylesheet');
-	link.href = "https://localhost:8080/variation-1.css";
-	document.head.appendChild(link);
+  var link = document.createElement("link");
+  link.setAttribute("rel", "stylesheet");
+  link.href = "https://localhost:8080/variation-1.css";
+  document.head.appendChild(link);
 }
 
 function injectJS() {
-	var script = document.createElement('script');
-	script.setAttribute('type', 'text/javascript');
-	script.src = "https://localhost:8080/variation-1.js";
-	document.body.appendChild(script);
+  var script = document.createElement("script");
+  script.setAttribute("type", "text/javascript");
+  script.src = "https://localhost:8080/variation-1.js";
+  document.body.appendChild(script);
 }
 
 function injectLiveReloadScript() {
-	var script = document.createElement('script');
-	script.setAttribute('type', 'text/javascript');
-	script.src = "https://localhost:35729/livereload.js?snipver=1";
-	document.body.appendChild(script);
+  var script = document.createElement("script");
+  script.setAttribute("type", "text/javascript");
+  script.src = "https://localhost:35729/livereload.js?snipver=1";
+  document.body.appendChild(script);
 }
 
 injectCSS();
 injectJS();
 injectLiveReloadScript();
 
-console.log('A/B Test Script is running!');
+console.log("Saabbir:", "User JavaScript and CSS is running!");
 ```
 
 _You won't need to worry about the above code. It won't change and it will be the same for all the time. It just injects your variation css and javascript along with livereload script to your target URL page._

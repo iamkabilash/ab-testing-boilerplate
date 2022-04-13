@@ -36,12 +36,20 @@ module.exports = (env, argv) => {
     ],
   };
 
+  const srcFullPath = String.raw`${fs.readFileSync("./src-path.txt", "utf8")}`;
+  const srcPath = path.resolve(srcFullPath).split(path.sep).join("/");
+
+  const distPath = path
+    .resolve(srcPath, "..", "dist")
+    .split(path.sep)
+    .join("/");
+
   // Global config
   const config = {
-    entry: entry("./src/**/*.js"),
+    entry: entry(`${srcPath}/**/*.js`),
     output: {
       filename: "[name].js",
-      path: path.resolve(__dirname, "dist"),
+      path: distPath,
       clean: true,
     },
     module: {
