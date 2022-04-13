@@ -80,7 +80,7 @@ npm run dev
 
 _You will need to refresh the target URL once if that URL already loaded in the browser._
 
-7. You can use the variation-1.js & variation-1.scss inside the variation-1 directory to create your AB Test variation or you can create your own folder structure. Just make sure to add the correct path for your variation js in webpack entry object.
+7. You can use whatever directory structure you want to use just make sure you write your `src` directory path to the `src-path.txt` file in the root directory.
 
 8. Finally, when you're done with the local development, run following command to build the final javascript and css to use in the A/B testing tools.
 
@@ -88,7 +88,7 @@ _You will need to refresh the target URL once if that URL already loaded in the 
 npm run build
 ```
 
-_The build files will be found inside the dist directory. Copy necessary codes from there to use in your A/B testing tool._
+_The build files will be found inside the `dist` directory and which will be found next to the `src` directory you have mentioned in the `src-path.txt` file._
 
 ## Notes
 
