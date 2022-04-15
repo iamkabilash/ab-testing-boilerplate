@@ -2,7 +2,7 @@
 import "./variation-1.scss";
 
 // Variation code running alert! Remove later.
-alert("Hello from Echo AB Testing Boilerplate!");
+alert("Hello from variation-1.js");
 
 // Start Variation JS
 void (function loadVariation() {

@@ -6,7 +6,6 @@
   "scripts": {
     "build": "webpack --mode=production",
     "serve": "webpack serve --mode=development",
-    "start-livereload": "node livereload-server.js",
     "dev": "npm-run-all -p -r serve"
   },
   "repository": {

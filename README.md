@@ -39,33 +39,33 @@ npm install
 
 4. Once User JavaScript and CSS chrome extension has been installed, click the extension icon to setup a new script. Within the extension, copy and paste the following code into the **JS** pane and press `ctrl + s` to save the script.
 
-```js
+```sh
 function injectCSS() {
-  var link = document.createElement("link");
-  link.setAttribute("rel", "stylesheet");
-  link.href = "https://localhost:8080/variation-1.css";
-  document.head.appendChild(link);
+	var link = document.createElement('link');
+	link.setAttribute('rel', 'stylesheet');
+	link.href = "https://localhost:8080/variation-1.css";
+	document.head.appendChild(link);
 }
 
 function injectJS() {
-  var script = document.createElement("script");
-  script.setAttribute("type", "text/javascript");
-  script.src = "https://localhost:8080/variation-1.js";
-  document.body.appendChild(script);
+	var script = document.createElement('script');
+	script.setAttribute('type', 'text/javascript');
+	script.src = "https://localhost:8080/variation-1.js";
+	document.body.appendChild(script);
 }
 
 function injectLiveReloadScript() {
-  var script = document.createElement("script");
-  script.setAttribute("type", "text/javascript");
-  script.src = "https://localhost:35729/livereload.js?snipver=1";
-  document.body.appendChild(script);
+	var script = document.createElement('script');
+	script.setAttribute('type', 'text/javascript');
+	script.src = "https://localhost:35729/livereload.js?snipver=1";
+	document.body.appendChild(script);
 }
 
 injectCSS();
 injectJS();
 injectLiveReloadScript();
 
-console.log("Saabbir:", "User JavaScript and CSS is running!");
+console.log('Saabbir:', 'UserScript is running!');
 ```
 
 _You won't need to worry about the above code. It won't change and it will be the same for all the time. It just injects your variation css and javascript along with livereload script to your target URL page._
@@ -80,7 +80,7 @@ npm run dev
 
 _You will need to refresh the target URL once if that URL already loaded in the browser._
 
-7. You can use whatever directory structure you want to use just make sure you write your `src` directory path to the `src-path.txt` file in the root directory.
+7. You can use the variation-1.js & variation-1.scss inside the variation-1 directory to create your AB Test variation or you can create your own folder structure. Just make sure to add the correct path for your variation js in webpack entry object.
 
 8. Finally, when you're done with the local development, run following command to build the final javascript and css to use in the A/B testing tools.
 
@@ -88,11 +88,56 @@ _You will need to refresh the target URL once if that URL already loaded in the 
 npm run build
 ```
 
-_The build files will be found inside the `dist` directory and which will be found next to the `src` directory you have mentioned in the `src-path.txt` file._
+_The build files will be found inside the dist directory. Copy necessary codes from there to use in your A/B testing tool._
 
 ## Notes
 
-If your browser (Chrome/Firefox) doesn't allow to serve https resources from localhost, you can enable this feature in Chrome by going to `chrome://flags/#allow-insecure-localhost`
+If you prefer to use Tampermonkey instead of User JavaScript and CSS, you can do that and use following userscript for Tampermonkey which does the same thing as above.
+
+```js
+// ==UserScript==
+// @name         Inject variations
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @include      http://*abtest=true
+// @include      https://*abtest=true
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=github.io
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  "use strict";
+
+  function injectCSS() {
+    var link = document.createElement("link");
+    link.setAttribute("rel", "stylesheet");
+    link.href = "http://localhost:8080/variation-1.css";
+    document.head.appendChild(link);
+  }
+
+  function injectJS() {
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.src = "http://localhost:8080/variation-1.js";
+    document.body.appendChild(script);
+  }
+
+  function injectLiveReloadScript() {
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.src = "http://localhost:35729/livereload.js?snipver=1";
+    document.body.appendChild(script);
+  }
+
+  injectCSS();
+  injectJS();
+  injectLiveReloadScript();
+
+  console.log("Saabbir:", "Tampermonkey UserScript is running!");
+})();
+```
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
