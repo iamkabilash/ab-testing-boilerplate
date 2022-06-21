@@ -1,4 +1,4 @@
-# Echo AB Testing Boilerplate
+# AB Testing Boilerplate
 
 ## Technology used
 
@@ -21,12 +21,12 @@
 
 _Follow below steps in order_
 
-1. Download the zip file from this link https://github.com/Saabbir/echo-ab-testing-boilerplate/archive/refs/heads/master.zip
+1. Download the zip file from this link https://github.com/Saabbir/ab-testing-boilerplate/archive/refs/heads/master.zip
 
 Or you can clone this repo by typing following command in the terminal:
 
 ```sh
-git clone https://github.com/Saabbir/echo-ab-testing-boilerplate.git
+git clone https://github.com/Saabbir/ab-testing-boilerplate.git
 ```
 
 2. Open the project in your favorite code editor and run the following command from the project root:
@@ -43,21 +43,21 @@ npm install
 function injectCSS() {
 	var link = document.createElement('link');
 	link.setAttribute('rel', 'stylesheet');
-	link.href = "https://localhost:8080/variation-1.css";
+	link.href = "http://localhost:8080/variation-1.css";
 	document.head.appendChild(link);
 }
 
 function injectJS() {
 	var script = document.createElement('script');
 	script.setAttribute('type', 'text/javascript');
-	script.src = "https://localhost:8080/variation-1.js";
+	script.src = "http://localhost:8080/variation-1.js";
 	document.body.appendChild(script);
 }
 
 function injectLiveReloadScript() {
 	var script = document.createElement('script');
 	script.setAttribute('type', 'text/javascript');
-	script.src = "https://localhost:35729/livereload.js?snipver=1";
+	script.src = "http://localhost:35729/livereload.js?snipver=1";
 	document.body.appendChild(script);
 }
 
