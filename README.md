@@ -39,58 +39,74 @@ npm install
 
 4. Once User JavaScript and CSS chrome extension has been installed, click the extension icon to setup a new script. Within the extension, copy and paste the following code into the **JS** pane and press `ctrl + s` to save the script.
 
-```sh
-function injectCSS() {
-	var link = document.createElement('link');
-	link.setAttribute('rel', 'stylesheet');
-	link.href = "http://localhost:8080/variation-1.css";
-	document.head.appendChild(link);
+```js
+// Set which variation to show to the page
+const variation = 1;
+
+// Set `abtest` cookie if you visit a page with `abtest` query parameter
+if (document.location.search.includes("abtest")) {
+  document.cookie = "abtest=true; path=/;";
 }
 
-function injectJS() {
-	var script = document.createElement('script');
-	script.setAttribute('type', 'text/javascript');
-	script.src = "http://localhost:8080/variation-1.js";
-	document.body.appendChild(script);
+// Check if `abtest` cookie available or the url has `abtest` query parameter
+if (
+  document.cookie.includes("abtest") ||
+  document.location.search.includes("abtest")
+) {
+  void (function injectCSS() {
+    var link = document.createElement("link");
+    link.setAttribute("rel", "stylesheet");
+    link.href = `http://localhost:8080/variation-${variation}.css`;
+    document.head.appendChild(link);
+  })();
+
+  void (function injectJS() {
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.src = `http://localhost:8080/variation-${variation}.js`;
+    document.body.appendChild(script);
+  })();
+
+  void (function injectLiveReloadScript() {
+    var script = document.createElement("script");
+    script.setAttribute("type", "text/javascript");
+    script.src = "http://localhost:35729/livereload.js?snipver=1";
+    document.body.appendChild(script);
+  })();
+
+  console.log("Saabbir:", "UserScript is running!");
 }
-
-function injectLiveReloadScript() {
-	var script = document.createElement('script');
-	script.setAttribute('type', 'text/javascript');
-	script.src = "http://localhost:35729/livereload.js?snipver=1";
-	document.body.appendChild(script);
-}
-
-injectCSS();
-injectJS();
-injectLiveReloadScript();
-
-console.log('Saabbir:', 'UserScript is running!');
 ```
 
 _You won't need to worry about the above code. It won't change and it will be the same for all the time. It just injects your variation css and javascript along with livereload script to your target URL page._
 
-5. Also, give this script a name and a target URL where your variation will run.
+5. Also, give this script a name and a target URL where you want your variation to run.
 
-6. Now run following command from the project root and visit your target URL to see the variation:
+6. After that, go back to your code editor and write your currently working project path into `_project-path.txt` file in the root directory. This is very important as some of the command you will run later will start from here.
+
+7. After setting the project path, you can generate some boilerplate code into your project, by running `npm run create` command. It will generate some boilerplate code along with a file named `target-url.txt`. You can set your target url into this file and by doing that whenever you run `npm run dev` command, it will open your target url into your browser automatically.
+
+```sh
+npm run create
+```
+
+8. When you're done setting the project path and generating project boilerplate code, it's time to start local development. Run following command and it will start the development server from your specified project path.
 
 ```sh
 npm run dev
 ```
 
-_You will need to refresh the target URL once if that URL already loaded in the browser._
+9. Now start working on your project by writing some code into the project javascript and scss file and see the magic.
 
-7. You can use the variation-1.js & variation-1.scss inside the variation-1 directory to create your AB Test variation or you can create your own folder structure. Just make sure to add the correct path for your variation js in webpack entry object.
-
-8. Finally, when you're done with the local development, run following command to build the final javascript and css to use in the A/B testing tools.
+10. Finally, when you're done with the local development, run following command to build the final javascript and css to use in the A/B testing tool.
 
 ```sh
 npm run build
 ```
 
-_The build files will be found inside the dist directory. Copy necessary codes from there to use in your A/B testing tool._
+_The build files will be found inside the `dist` directory. Copy necessary codes from there to use in your A/B testing tool._
 
-## Notes
+<!-- ## Notes
 
 If you prefer to use Tampermonkey instead of User JavaScript and CSS, you can do that and use following userscript for Tampermonkey which does the same thing as above.
 
@@ -137,7 +153,7 @@ If you prefer to use Tampermonkey instead of User JavaScript and CSS, you can do
 
   console.log("Saabbir:", "Tampermonkey UserScript is running!");
 })();
-```
+``` -->
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
