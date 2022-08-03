@@ -2,15 +2,19 @@
 import "./variation-1.scss";
 
 // Variation code running alert! Remove later.
-alert("Hello from variation-1.js");
+alert("Hello from Echo AB Testing Boilerplate!");
 
 // Start Variation JS
 void (function loadVariation() {
-  // Main variation/application code
-  var test = {
+  const test = {
+    id: "TEST_ID",
+    name: "TEST_NAME",
+    version: "Version 1.0",
+    variation: "Variation 1",
+    polling_element: "POLLING_ELEMENT",
     init: function () {
       // Add a test specific classname to the body element
-      document.body.classList.add("test_specific_class_name");
+      document.body.classList.add(test.id);
 
       // Below function calls order is important
       test.preSetupVariables();
@@ -22,26 +26,23 @@ void (function loadVariation() {
     },
     preSetupVariables: function () {
       // Setup test independent/global variables
-      test.name = "TEST_PLAN_NAME";
-      test.version = "Version 1.0";
-      test.variation = "Variation 1";
     },
     preSetupEvents: function () {
       // Setup test independent/global events
       document.addEventListener("click", test.handleDocumentClicks);
     },
     mainCSS: function () {
-      var styleEl = document.createElement("style");
+      const styleEl = document.createElement("style");
       styleEl.setAttribute("type", "text/css");
       document.head.appendChild(styleEl).textContent = `
-        .test_specific_class_name * {
+        .${test.id} * {
           border: 2px solid red;
         }
       `;
     },
     mainJS: function () {
       // Get jQuery reference
-      var $ = jQuery;
+      const $ = jQuery;
 
       // Test specific JavaScript code goes here
     },
@@ -62,9 +63,9 @@ void (function loadVariation() {
 
   // Polling conditions
   if (
-    !document.querySelector(".test_specific_class_name") &&
+    !document.querySelector(`.${test.id}`) &&
     window.jQuery &&
-    jQuery("POLL_ELEMENT").length
+    jQuery(test.polling_element || "body").length
   ) {
     try {
       // Activate test
@@ -82,4 +83,5 @@ void (function loadVariation() {
   } else {
     setTimeout(loadVariation, 25);
   }
-})(); // End Variation JS
+})();
+// End Variation JS

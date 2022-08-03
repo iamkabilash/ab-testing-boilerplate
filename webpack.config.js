@@ -4,6 +4,35 @@ const entry = require("webpack-glob-entry");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LiveReloadPlugin = require("webpack-livereload-plugin");
 
+// Project path
+const projectPath = String.raw`${fs.readFileSync(
+  "./_project-path.txt",
+  "utf8"
+)}`;
+
+// Project src path
+const projectSrcPath = path.resolve(
+  path.resolve(projectPath).split(path.sep).join("/"),
+  "code/src"
+);
+
+// Project dist path
+const projectDistPath = path
+  .resolve(projectSrcPath, "..", "dist")
+  .split(path.sep)
+  .join("/");
+
+// URL to open when `npm run dev` command runs
+let targetURL;
+try {
+  targetURL = String.raw`${fs.readFileSync(
+    path.resolve(`${projectPath}`, "target-url.txt"),
+    "utf8"
+  )}`;
+} catch (e) {
+  targetURL = "http://localhost:8080/webpack-dev-server";
+}
+
 module.exports = (env, argv) => {
   const jsConfig = {
     test: /\.m?js$/,
@@ -36,21 +65,14 @@ module.exports = (env, argv) => {
     ],
   };
 
-  const srcFullPath = String.raw`${fs.readFileSync("./src-path.txt", "utf8")}`;
-  const srcPath = path.resolve(srcFullPath).split(path.sep).join("/");
-
-  const distPath = path
-    .resolve(srcPath, "..", "dist")
-    .split(path.sep)
-    .join("/");
-
   // Global config
   const config = {
-    entry: entry(`${srcPath}/**/*.js`),
+    entry: entry(`${projectSrcPath}/**/*.js`),
     output: {
       filename: "[name].js",
-      path: distPath,
+      path: projectDistPath,
       clean: true,
+      publicPath: "/",
     },
     module: {
       rules: [cssConfig],
@@ -60,17 +82,34 @@ module.exports = (env, argv) => {
       new LiveReloadPlugin({
         protocol: "http",
         port: 35729,
-        liveCSS: false,
-        applyCSSLive: true,
+        // liveCSS: false,
         // liveImg: false,
-        // useSourceHash: true,
-        // ignore: /css|scss/,
-        // key: fs.readFileSync(path.join(__dirname, "livereload.key"), "utf-8"),
-        // cert: fs.readFileSync(path.join(__dirname, "livereload.crt"), "utf-8"),
+        applyCSSLive: true,
+        //useSourceHash: true,
+        //ignore: /css|scss/,
       }),
     ],
     devServer: {
-      // https: true,
+      //https: true,
+      historyApiFallback: true,
+      allowedHosts: "all",
+      host: "localhost",
+      liveReload: true,
+      open: {
+        target: [targetURL + "?abtest=true"],
+      },
+      compress: true,
+      hot: true,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+    },
+    externals: {
+      // require("jquery") is external and available
+      //  on the global var jQuery
+      jquery: "jQuery",
     },
   };
 

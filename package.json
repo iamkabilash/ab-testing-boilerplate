@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "serve": "webpack serve --mode=development",
-    "dev": "npm-run-all -p -r serve"
+    "create": "node node_scripts/create-files.js",
+    "dev": "npm-run-all -s serve"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,8 @@
     "iOS >= 9"
   ],
   "dependencies": {
+    "chalk": "^4.1.2",
+    "fs-extra": "^10.1.0",
     "http-proxy": "^1.18.1"
   }
 }
