@@ -78,7 +78,9 @@ module.exports = (env, argv) => {
       rules: [cssConfig],
     },
     plugins: [
-      new MiniCssExtractPlugin(),
+      new MiniCssExtractPlugin({
+        filename: "[name].css",
+      }),
       new LiveReloadPlugin({
         protocol: "http",
         port: 35729,

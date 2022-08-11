@@ -19,10 +19,10 @@ void (function loadVariation() {
       // Below function calls order is important
       test.preSetupVariables();
       test.preSetupEvents();
-      test.mainCSS();
       test.mainJS();
       test.postSetupVariables();
       test.postSetupEvents();
+      test.setupMutationObservers();
     },
     preSetupVariables: function () {
       // Setup test independent/global variables
@@ -30,15 +30,6 @@ void (function loadVariation() {
     preSetupEvents: function () {
       // Setup test independent/global events
       document.addEventListener("click", test.handleDocumentClicks);
-    },
-    mainCSS: function () {
-      const styleEl = document.createElement("style");
-      styleEl.setAttribute("type", "text/css");
-      document.head.appendChild(styleEl).textContent = `
-        .${test.id} * {
-          border: 2px solid red;
-        }
-      `;
     },
     mainJS: function () {
       // Get jQuery reference
@@ -58,6 +49,9 @@ void (function loadVariation() {
       if (e.target.className.includes("ELEMENT_CLASS_NAME")) {
         // Do something on click of element with className ELEMENT_CLASS_NAME
       }
+    },
+    setupMutationObservers: function () {
+      // Setup mutation observers for this test in here
     },
   };
 

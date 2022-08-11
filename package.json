@@ -6,7 +6,11 @@
   "scripts": {
     "build": "webpack --mode=production",
     "serve": "webpack serve --mode=development",
-    "create": "node node_scripts/create-files.js",
+    "generate-files": "node node_scripts/generate-files.js",
+    "create-client": "node node_scripts/create-client.js",
+    "create-site": "node node_scripts/create-site.js",
+    "create-project": "node node_scripts/create-project.js",
+    "select-project": "node node_scripts/select-project.js",
     "dev": "npm-run-all -s serve"
   },
   "repository": {
@@ -54,7 +58,11 @@
   ],
   "dependencies": {
     "chalk": "^4.1.2",
+    "enquirer": "^2.3.6",
     "fs-extra": "^10.1.0",
-    "http-proxy": "^1.18.1"
+    "http-proxy": "^1.18.1",
+    "is-invalid-path": "^1.0.2",
+    "is-valid-path": "^0.1.1",
+    "prompt": "^1.3.0"
   }
 }
