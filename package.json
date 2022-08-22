@@ -1,5 +1,5 @@
 {
-  "name": "echo-ab-testing-boilerplate",
+  "name": "ab-testing-boilerplate",
   "version": "1.0.0",
   "description": "Echo A/B testing boilerplate with SCSS, Babel, LiveReload support.",
   "private": true,
@@ -11,6 +11,7 @@
     "create-site": "node node_scripts/create-site.js",
     "create-project": "node node_scripts/create-project.js",
     "select-project": "node node_scripts/select-project.js",
+    "cli": "node node_scripts/cli.js",
     "dev": "npm-run-all -s serve"
   },
   "repository": {

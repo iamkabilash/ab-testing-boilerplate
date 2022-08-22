@@ -4,9 +4,7 @@
 Version:    1.0
 -------------------------------------------------------------------*/
 
-@import "./variables";
-
-.#{$testId} {
+.TEST_ID {
   * {
     border: 1px solid red;
   }

@@ -17,14 +17,25 @@ let projectSrcPath = path.resolve(
 
 // Exit process if project src path exists
 if (fs.existsSync(projectSrcPath)) {
-  console.log(chalk.red("Exited as the files are in place already!"));
+  console.log(chalk.red("Exiting as the files are generated already!"));
   process.exit();
-} else {
+}
+
+try {
   // Copy all the files from variation template to project directory
-  try {
-    fse.copySync(path.resolve(__dirname, "../variation-template"), projectPath);
-    console.log(chalk.blue("Project files generated successfully!"));
-  } catch (err) {
-    console.error(err);
-  }
+  fse.copySync(path.resolve(__dirname, "../variation-template"), projectPath);
+  console.log(
+    chalk.blue(
+      `Project files generated successfully. Now run ${chalk.inverse(
+        "npm run dev"
+      )} to start the local development.`
+    )
+  );
+} catch (error) {
+  console.log(
+    chalk.red(
+      "Error on trying to copy variation template to project directory."
+    ),
+    error
+  );
 }
