@@ -43,32 +43,32 @@ npm install
 // Set which variation to show to the page
 const variation = 1;
 
-// Set `abtest` cookie if you visit a page with `abtest` query parameter
-if (document.location.search.includes("abtest")) {
-  document.cookie = "abtest=true; path=/;";
+// Set `abtest` cookie if you visit a page with `abtest` string in the url anywhere
+if (document.location.href.includes("abtest")) {
+  document.cookie = "abtest=true; path=/; max-age=60*60*24";
 }
 
-// Check if `abtest` cookie available or the url has `abtest` query parameter
+// Check if `abtest` cookie available or the url contains string `abtest`
 if (
   document.cookie.includes("abtest") ||
-  document.location.search.includes("abtest")
+  document.location.href.includes("abtest")
 ) {
   void (function injectCSS() {
-    var link = document.createElement("link");
+    const link = document.createElement("link");
     link.setAttribute("rel", "stylesheet");
     link.href = `http://localhost:8080/variation-${variation}.css`;
     document.head.appendChild(link);
   })();
 
   void (function injectJS() {
-    var script = document.createElement("script");
+    const script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
     script.src = `http://localhost:8080/variation-${variation}.js`;
     document.body.appendChild(script);
   })();
 
   void (function injectLiveReloadScript() {
-    var script = document.createElement("script");
+    const script = document.createElement("script");
     script.setAttribute("type", "text/javascript");
     script.src = "http://localhost:35729/livereload.js?snipver=1";
     document.body.appendChild(script);
@@ -84,10 +84,10 @@ _You won't need to worry about the above code. It won't change and it will be th
 
 6. After that, go back to your code editor and write your currently working project path into `_project-path.txt` file in the root directory. This is very important as some of the command you will run later will start from here.
 
-7. After setting the project path, you can generate some boilerplate code into your project, by running `npm run generate-files` command. It will generate some boilerplate code along with a file named `target-url.txt`. You can set your target url into this file and by doing that whenever you run `npm run dev` command, it will open your target url into your browser automatically.
+7. After setting the project path, you can generate some boilerplate code into your project, by running `npm run generate` command. It will generate some boilerplate code along with a file named `target-url.txt`. You can set your target url into this file and by doing that whenever you run `npm run dev` command, it will open your target url into your browser automatically.
 
 ```sh
-npm run generate-files
+npm run generate
 ```
 
 8. When you're done setting the project path and generating project boilerplate code, it's time to start local development. Run following command and it will start the development server from your specified project path.
@@ -108,78 +108,17 @@ _The build files will be found inside the `dist` directory. Copy necessary codes
 
 ## Some more commands
 
-To create a new client via command line, use:
+To create a new client or site or project via command line, use:
 
 ```sh
-npm run create-client
+npm run cli
 ```
 
-To create a new site via command line, use:
+To check currenty working project path/directory run:
 
 ```sh
-npm run create-site
+npm run pwd
 ```
-
-To create a new project via command line, use:
-
-```sh
-npm run create-project
-```
-
-To select a project via command line, use:
-
-```sh
-npm run select-project
-```
-
-<!-- ## Notes
-
-If you prefer to use Tampermonkey instead of User JavaScript and CSS, you can do that and use following userscript for Tampermonkey which does the same thing as above.
-
-```js
-// ==UserScript==
-// @name         Inject variations
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
-// @include      http://*abtest=true
-// @include      https://*abtest=true
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=github.io
-// @grant        none
-// ==/UserScript==
-
-(function () {
-  "use strict";
-
-  function injectCSS() {
-    var link = document.createElement("link");
-    link.setAttribute("rel", "stylesheet");
-    link.href = "http://localhost:8080/variation-1.css";
-    document.head.appendChild(link);
-  }
-
-  function injectJS() {
-    var script = document.createElement("script");
-    script.setAttribute("type", "text/javascript");
-    script.src = "http://localhost:8080/variation-1.js";
-    document.body.appendChild(script);
-  }
-
-  function injectLiveReloadScript() {
-    var script = document.createElement("script");
-    script.setAttribute("type", "text/javascript");
-    script.src = "http://localhost:35729/livereload.js?snipver=1";
-    document.body.appendChild(script);
-  }
-
-  injectCSS();
-  injectJS();
-  injectLiveReloadScript();
-
-  console.log("Saabbir:", "Tampermonkey UserScript is running!");
-})();
-``` -->
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

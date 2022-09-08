@@ -30,7 +30,7 @@ try {
     "utf8"
   )}`;
 } catch (e) {
-  targetURL = "http://localhost:8080/webpack-dev-server";
+  targetURL = "http://localhost:8080/";
 }
 
 module.exports = (env, argv) => {
@@ -56,6 +56,8 @@ module.exports = (env, argv) => {
       {
         loader: "sass-loader",
         options: {
+          // Prefer `dart-sass`
+          implementation: require("sass"),
           sourceMap: true,
           sassOptions: {
             outputStyle: argv.mode === "production" ? "expanded" : "compressed",
@@ -112,6 +114,11 @@ module.exports = (env, argv) => {
       // require("jquery") is external and available
       //  on the global var jQuery
       jquery: "jQuery",
+    },
+    resolve: {
+      alias: {
+        utils: path.resolve(__dirname, "utils"),
+      },
     },
   };
 

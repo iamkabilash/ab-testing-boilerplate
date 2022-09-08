@@ -1,34 +1,35 @@
 {
   "name": "ab-testing-boilerplate",
   "version": "1.0.0",
-  "description": "Echo A/B testing boilerplate with SCSS, Babel, LiveReload support.",
-  "private": true,
+  "description": "A/B testing boilerplate with Webpack, Babel, SCSS, and LiveReload support.",
+  "private": false,
   "scripts": {
     "build": "webpack --mode=production",
     "serve": "webpack serve --mode=development",
-    "generate-files": "node node_scripts/generate-files.js",
-    "create-client": "node node_scripts/create-client.js",
-    "create-site": "node node_scripts/create-site.js",
-    "create-project": "node node_scripts/create-project.js",
-    "select-project": "node node_scripts/select-project.js",
+    "generate": "node node_scripts/generate-files.js",
+    "pwd": "node node_scripts/print-project-path.js",
     "cli": "node node_scripts/cli.js",
     "dev": "npm-run-all -s serve"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Saabbir/echo-ab-testing-boilerplate.git"
+    "url": "git+https://github.com/Saabbir/ab-testing-boilerplate.git"
   },
   "keywords": [
+    "EchoLogyx",
     "A/B Testing",
     "Boilerplate",
-    "EchoLogyx"
+    "CRO",
+    "Optimization",
+    "Marketing",
+    "Agency"
   ],
   "author": "Saabbir",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Saabbir/echo-ab-testing-boilerplate/issues"
+    "url": "https://github.com/Saabbir/ab-testing-boilerplate/issues"
   },
-  "homepage": "https://github.com/Saabbir/echo-ab-testing-boilerplate#readme",
+  "homepage": "https://github.com/Saabbir/ab-testing-boilerplate#readme",
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
@@ -38,11 +39,11 @@
     "css-loader": "^6.2.0",
     "livereload": "^0.9.3",
     "mini-css-extract-plugin": "^2.3.0",
-    "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.3.6",
     "postcss-gap-properties": "^2.0.0",
     "postcss-loader": "^6.1.1",
+    "sass": "^1.54.8",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
     "webpack": "^5.52.1",

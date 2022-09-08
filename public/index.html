@@ -4,20 +4,42 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Webpack Dev Server</title>
+    <title>AB Testing Boilerplate</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+
+    <!-- Index CSS -->
+    <link rel="stylesheet" href="./index.css" />
+
+    <!-- Variation 1 CSS -->
     <link rel="stylesheet" href="http://localhost:8080/variation-1.css" />
   </head>
   <body>
-    <div class="wrapper">
-      <div class="container">
-        <div class="content">
-          <h1>AB Testing Boilerplate!</h1>
-          <a href="http://localhost:8080/webpack-dev-server"
-            >http://localhost:8080/webpack-dev-server</a
-          >
+    <div class="l-wrapper">
+      <div class="l-wrapper__inner">
+        <div class="l-container">
+          <div class="c-content">
+            <h1 class="c-content__title">AB Testing Boilerplate!</h1>
+            <!-- <p class="c-content__text">
+              Visit
+              <a
+                class="c-content__link"
+                href="http://localhost:8080/webpack-dev-server"
+                >http://localhost:8080/webpack-dev-server</a
+              >
+              to check the assets report.
+            </p> -->
+            <div id="c-assets-report"></div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Index JS -->
+    <script src="./index.js"></script>
+
+    <!-- Variation 1 JS -->
     <script src="http://localhost:8080/variation-1.js"></script>
   </body>
 </html>

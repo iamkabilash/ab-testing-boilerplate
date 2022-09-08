@@ -13,5 +13,6 @@ $test_id: "TEST_ID";
   * {
     border: 1px solid red;
   }
+  @include css_border_box;
   // write your scss code here
 }
