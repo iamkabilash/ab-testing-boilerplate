@@ -3,6 +3,7 @@ const path = require("path");
 const entry = require("webpack-glob-entry");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LiveReloadPlugin = require("webpack-livereload-plugin");
+const { URL } = require("url");
 
 // Project path
 const projectPath = String.raw`${fs.readFileSync(
@@ -29,6 +30,14 @@ try {
     path.resolve(`${projectPath}`, "target-url.txt"),
     "utf8"
   )}`;
+
+  const url = new URL(targetURL);
+  if (url.search) {
+    url.searchParams.append("abtest", "true");
+    targetURL = url.href;
+  } else {
+    targetURL = targetURL + "?abtest=true";
+  }
 } catch (e) {
   targetURL = "http://localhost:8080/";
 }
@@ -100,7 +109,7 @@ module.exports = (env, argv) => {
       host: "localhost",
       liveReload: true,
       open: {
-        target: [targetURL + "?abtest=true"],
+        target: [targetURL],
       },
       compress: true,
       hot: true,

@@ -9,7 +9,7 @@
     "generate": "node node_scripts/generate-files.js",
     "pwd": "node node_scripts/print-project-path.js",
     "cli": "node node_scripts/cli.js",
-    "dev": "npm-run-all -s serve"
+    "dev": "npm run serve"
   },
   "repository": {
     "type": "git",

@@ -11,13 +11,10 @@ void (function loadVariation() {
     name: "TEST_NAME",
     version: "Version 1.0",
     variation: "Variation 1",
-    polling_element: "POLLING_ELEMENT",
+    pollingElement: "POLLING_ELEMENT",
     init: function () {
       // Add a test specific classname to the body element
-      document.body.classList.add(
-        test.id,
-        test.id + "--" + test.variation.toLowerCase().split(" ").join("-")
-      );
+      document.body.classList.add(test.id);
 
       // Below function calls order is important
       test.preSetupVariables();
@@ -26,7 +23,6 @@ void (function loadVariation() {
       test.mainJS();
       test.postSetupVariables();
       test.postSetupEvents();
-      test.registerMutationObservers();
     },
     preSetupVariables: function () {
       // Setup test independent/global variables
@@ -45,24 +41,10 @@ void (function loadVariation() {
       `;
     },
     mainJS: function () {
-      /*-----------------------------------------\
-      // 01 - DEFINE VARIABLES
-      /-----------------------------------------*/
-
       // Get jQuery reference
       const $ = jQuery;
 
-      /*-----------------------------------------\
-      // 02 - IDENTIFY ELEMENTS
-      /-----------------------------------------*/
-
-      // Identify ELEMENT
-
-      /*-----------------------------------------\
-      // 03 - MANIPULATE ELEMENTS
-      /-----------------------------------------*/
-
-      // Manipulate ELEMENT
+      // Write logic in here
     },
     postSetupVariables: function () {
       // Setup test dependent variables
@@ -82,12 +64,11 @@ void (function loadVariation() {
     },
   };
 
+  // Return if the test ran already!
+  if (document.querySelector(`.${test.id}`)) return;
+
   // Polling conditions
-  if (
-    !document.querySelector(`.${test.id}`) &&
-    document.querySelector(test.polling_element || "body") &&
-    window.jQuery
-  ) {
+  if (document.querySelector(test.pollingElement || "body") && window.jQuery) {
     try {
       // Activate test
       test.init();

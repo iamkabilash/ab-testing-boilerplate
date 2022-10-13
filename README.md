@@ -1,43 +1,24 @@
-# AB Testing Boilerplate
+## CLI steps
 
-## Technology used
+1. To get started, first install project dependencies using `npm install`.
+2. Then create a project or select a project using `npm run cli`.
+3. Then start the dev server using `npm run dev`.
+4. Use `npm run build` to build the `dist` directory after finishing the local development.
 
-![Javascript][javascript-shield] ![Node js][nodejs-shield] ![Webpack][webpack-shield]
+## GUI + CLI steps
 
-## Chrome Extension
+1. To get started, first install project dependencies using `npm install`.
+2. Then create a project manually using GUI (Graphical User Interface).
+3. Then write project path to `_project-path.txt` file in the root directory.
+4. Then generate project boilerplate code using `npm run generate` or you can copy all the template files from `variation-template` directory manually.
+5. Now run `npm run dev` to start local development.
+6. Use `npm run build` to build the `dist` directory after finishing the local development.
 
-[![User JavaScript and CSS][user-js-and-css-shield]][user-js-and-css-url]
+## Setup User JavaScript and CSS
 
-## Features:
+1. Install chrome extension [User JavaScript and CSS][user-js-and-css-url].
 
-- Compile SCSS into CSS
-- Transpile modern JavaScript (ES6+) into ES5
-- CSS autoprefixer support
-- Souremap support
-- Livereload enabled
-- Console log removed from the build files
-
-## Getting Started
-
-_Follow below steps in order_
-
-1. Download the zip file from this link https://github.com/Saabbir/ab-testing-boilerplate/archive/refs/heads/master.zip
-
-<!-- Or you can clone this repo by typing following command in the terminal:
-
-```sh
-git clone https://github.com/Saabbir/ab-testing-boilerplate.git
-``` -->
-
-2. Open the project in your favorite code editor and run the following command from the project root:
-
-```sh
-npm install
-```
-
-3. While npm is installing the dependencies, install chrome extension [User JavaScript and CSS][user-js-and-css-url].
-
-4. Once User JavaScript and CSS chrome extension has been installed, click the extension icon to setup a new script. Within the extension, copy and paste the following code into the **JS** pane and press `ctrl + s` to save the script.
+2. Once User JavaScript and CSS chrome extension has been installed, click the extension icon to setup a new script. Within the extension, copy and paste the following code into the **JS** pane and press `ctrl + s` to save the script.
 
 ```js
 // Set which variation to show to the page
@@ -78,43 +59,13 @@ if (
 }
 ```
 
-_You won't need to worry about the above code. It won't change and it will be the same for all the time. It just injects your variation css and javascript along with livereload script to your target URL page._
+_You won't need to worry about the code above. It won't change and it will be the same for all the time. It just injects your variation CSS and JavaScript along with livereload script to your target URL page._
 
-5. Also, give this script a name and a target URL where you want your variation to run.
-
-6. After that, go back to your code editor and write your currently working project path into `_project-path.txt` file in the root directory. This is very important as some of the command you will run later will start from here.
-
-7. After setting the project path, you can generate some boilerplate code into your project, by running `npm run generate` command. It will generate some boilerplate code along with a file named `target-url.txt`. You can set your target url into this file and by doing that whenever you run `npm run dev` command, it will open your target url into your browser automatically.
-
-```sh
-npm run generate
-```
-
-8. When you're done setting the project path and generating project boilerplate code, it's time to start local development. Run following command and it will start the development server from your specified project path.
-
-```sh
-npm run dev
-```
-
-9. Now start working on your project by writing some code into the project javascript and scss file and see the magic.
-
-10. Finally, when you're done with the local development, run following command to build the final javascript and css to use in the A/B testing tool.
-
-```sh
-npm run build
-```
-
-_The build files will be found inside the `dist` directory. Copy necessary codes from there to use in your A/B testing tool._
+3. Give this script a name and a target URL where you want your variation to run.
 
 ## Some more commands
 
-To create a new client or site or project via command line, use:
-
-```sh
-npm run cli
-```
-
-To check currenty working project path/directory run:
+To check currenty working project path/directory, run:
 
 ```sh
 npm run pwd
