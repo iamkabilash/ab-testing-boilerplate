@@ -5,32 +5,29 @@ import "./variation-1.scss";
 alert("Hello from AB Testing Boilerplate!");
 
 // Start Variation JS
-void (function loadVariation() {
+void (function loadVariation(timeInFuture) {
+  // Main Test object
   const test = {
+    // Some test specific global variables
     id: "TEST_ID",
     name: "TEST_NAME",
     version: "Version 1.0",
     variation: "Variation 1",
-    pollingElement: "POLLING_ELEMENT",
+    pollingElement: document.querySelector("POLLING_ELEMENT"),
+
+    // Test init
     init: function () {
       // Add a test specific classname to the body element
       document.body.classList.add(test.id);
 
       // Below function calls order is important
-      test.preSetupVariables();
-      test.preSetupEvents();
       test.mainCSS();
+      test.identifyElements();
       test.mainJS();
-      test.postSetupVariables();
-      test.postSetupEvents();
+      test.setupEvents();
     },
-    preSetupVariables: function () {
-      // Setup test independent/global variables
-    },
-    preSetupEvents: function () {
-      // Setup test independent/global events
-      document.addEventListener("click", test.handleDocumentClicks);
-    },
+
+    // Main CSS
     mainCSS: function () {
       const styleEl = document.createElement("style");
       styleEl.id = test.id + "__mainCSS";
@@ -40,35 +37,49 @@ void (function loadVariation() {
         */
       `;
     },
+
+    // Identify control elements in here
+    identifyElements: function () {
+      // Get jQuery reference
+      const $ = jQuery;
+
+      // Identify sample element
+      // $(".sample-element").addClass("c-sample-element");
+    },
+
+    // Main JS
     mainJS: function () {
       // Get jQuery reference
       const $ = jQuery;
 
-      // Write logic in here
+      // Manipulate elements in here
     },
-    postSetupVariables: function () {
-      // Setup test dependent variables
-      // test.modal = document.querySelector(".c-exit-intent-modal");
+
+    // Setup events
+    setupEvents: function () {
+      document.addEventListener("click", test.handleDocumentClicks);
     },
-    postSetupEvents: function () {
-      // Setup test dependent events
-      // test.modal.addEventListener("click", test.handleModalClick);
-    },
+
+    // Handle all document clicks
     handleDocumentClicks: function (clickEvent) {
+      // Get jQuery reference
+      const $ = jQuery;
+
+      // Handle element with class name ELEMENT_CLASS_NAME click
       if (clickEvent.target.classList.contains("ELEMENT_CLASS_NAME")) {
         // Do something on click of element with className ELEMENT_CLASS_NAME
       }
     },
-    registerMutationObservers: function () {
-      // Setup mutation observers for this test in here
-    },
+
+    // Register all mutation observers here
+    registerMutationObservers: function () {},
   };
 
   // Return if the test ran already!
   if (document.querySelector(`.${test.id}`)) return;
 
   // Polling conditions
-  if (document.querySelector(test.pollingElement || "body") && window.jQuery) {
+  if (test.pollingElement && window.jQuery) {
     try {
       // Activate test
       test.init();
@@ -86,7 +97,9 @@ void (function loadVariation() {
       console.log("Saabbir:", `${test.name}: Initialization Error:`, error);
     }
   } else {
-    setTimeout(loadVariation, 25);
+    Date.now() < timeInFuture
+      ? setTimeout(loadVariation.bind({}, timeInFuture), 25)
+      : console.log("Saabbir:", "loadVariation timed out!");
   }
-})();
+})(Date.now() + 60000);
 // End Variation JS

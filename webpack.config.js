@@ -3,6 +3,7 @@ const path = require("path");
 const entry = require("webpack-glob-entry");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LiveReloadPlugin = require("webpack-livereload-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { URL } = require("url");
 
 // Project path
@@ -140,7 +141,17 @@ module.exports = (env, argv) => {
   if (argv.mode === "production") {
     config.module.rules.unshift(jsConfig);
     config.optimization = {
-      minimize: false,
+      minimize: false, // set true to minify JavaScript
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            format: {
+              comments: false, // set true to keep comments during minification
+            },
+          },
+          extractComments: false,
+        }),
+      ],
     };
   }
 

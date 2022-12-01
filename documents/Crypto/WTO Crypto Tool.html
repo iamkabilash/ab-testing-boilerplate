@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0147)http://dev-web01v.staging.dmz/WTOCryptoTool/index.html?s_keyToken=7a38b5e1fdf2cd9febba017afc7abfe53c4f0203c689&s_domainKey=1547062&isWTOActive=true -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <title>WTO Crypto Tool</title>
+        <link rel="icon shortcut" href="http://dev-web01v.staging.dmz/WTOCryptoTool/img/webtrends_icon.ico" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="./WTO Crypto Tool_files/wto_decoder.css" media="all">
+        <link rel="stylesheet" type="text/css" href="./WTO Crypto Tool_files/view.css" media="all">
+
+        <script type="text/javascript" src="./WTO Crypto Tool_files/underscore.min.js.download"></script>
+        <script type="text/javascript" src="./WTO Crypto Tool_files/wt_capi.js.download"></script>
+        <!--<script type="text/javascript" src="./lib/wt_lib.js" ></script>-->
+        <script type="text/javascript" src="./WTO Crypto Tool_files/jsonFormat.js.download"></script>
+        <!--<script type="text/javascript" src="./lib/WTO.js" ></script>-->
+        <script type="text/javascript" src="./WTO Crypto Tool_files/WTOClient.min.js.download"></script>
+
+        <script type="text/javascript">
+
+            WTOptimize.setup({'s_pageDisplayMode':'none', 's_pageMode':'head'}); // Exec setup call to make sure CAPI loads lib file
+
+            var WTOCL = new WTOClient();
+
+            function makeRequest(url, callback)
+            {
+                var callbackStr = '';
+                if(callback) callbackStr = "&callback=" + callback;
+
+                var scriptEl = document.createElement("script");
+                scriptEl.src = url + callbackStr;
+                document.body.appendChild(scriptEl);
+                console.warn('WTO JSONP Request: ', scriptEl.src);
+            }
+
+            function WTO_CallBack(response)
+            {
+                var textAreaVal;
+                if(response.value)
+                {
+                    textAreaVal = response.value;
+                } else if(response.errorMessage) {
+                    textAreaVal = response.errorMessage;
+                }
+
+                var parsedObj = undefined;
+                if(textAreaVal && textAreaVal.match(/\{.*\}/i))
+                {
+                    //textAreaVal = FormatJSON(textAreaVal);
+                    try {
+                        parsedObj = JSON.parse(textAreaVal, null);
+                    } catch(err) { console.warn('Can\'t parse result'); }
+
+                    if(typeof parsedObj === 'object')
+                    {
+                        textAreaVal = JSON.stringify(parsedObj, null, 4);
+                    }
+                    //textAreaVal = textAreaVal.replace(/"/g, "'"); // Replace with single cols
+                }
+
+                document.getElementById('result').value = textAreaVal;
+                if(typeof parsedObj === 'object')
+                {
+                    console.log('Result is object:');
+                    console.dir(parsedObj);
+                }
+                else console.log('Result: ' + textAreaVal);
+
+                return textAreaVal;
+            }
+
+            function getDomainID()
+            {
+                return document.getElementById('domainID').value;
+            }
+
+            function decrypt()
+            {
+                var keyToken = document.getElementById('keyToken').value;
+                var result, f, arrStr;
+                var protocol = getProtocolVer();
+                var str = getSource();
+
+                // Process source first
+                if(str.match(/^https?:\/\//i))
+                {
+                    str = str.replace(/^https?.*\/(?!.*\/)/i,'');
+                }
+
+                arrStr = [str];
+
+                // Gather distinct, separate encoded strings (if any)
+                var rxEncodedBits = str.match(/WT3[^\b"]+/gi);
+                console.log('rxEncodedBits:', rxEncodedBits);
+
+                if(rxEncodedBits)
+                {
+                    arrStr = rxEncodedBits;
+                }
+
+                document.getElementById('result').value = '';
+
+                console.dir({
+                    keyToken: keyToken,
+                    protocol: protocol,
+                    str: str,
+                    arrStr: arrStr
+                });
+
+                var arrDecoded = [];
+
+                for(var iR = 0, iRC = arrStr.length; iR < iRC; iR++)
+                {
+                    var strEnc = arrStr[iR];
+                    switch(protocol)
+                    {
+                        case '3.1':
+                            result = WTOCL.decode(strEnc, keyToken);
+                            break;
+
+                        case '3.2':
+                            result = WTOCL.decodeTEA(strEnc, keyToken);
+                            break;
+                    }
+
+                    console.log('result:', result);
+                    result = WTO_CallBack({value: result});
+                    arrDecoded.push(result);
+                }
+
+                document.getElementById('result').value = arrDecoded.join('\n\n');
+            }
+
+            function getProtocolVer()
+            {
+                return document.getElementById('protocol').value;
+            }
+
+            function encrypt()
+            {
+                var str = getSource();
+                var keyToken = document.getElementById('keyToken').value;
+                var result;
+                var protocol = getProtocolVer();
+
+                switch(protocol)
+                {
+                    case '3.1':
+                            var fnEnc = WTOCL.getEncodeFunc31();
+                        result = fnEnc(str, keyToken);
+                        break;
+
+                    case '3.2':
+                        result = WTOCL.encodeTEA(str, keyToken, true);
+                        break;
+                }
+
+                console.warn('Protocol:', protocol);
+                console.warn('Result:', result);
+
+                WTO_CallBack({
+                   value: result
+                });
+            }
+
+            function getResultStr()
+            {
+                return document.getElementById('result').value;
+            }
+
+             function fireRequest()
+            {
+                var request_url = '//ots.optimize.webtrends.com/ots/ots/js-'+getProtocolVer()+'/'+getDomainID()+'/'+getResultStr();
+                makeRequest(request_url);
+            }
+
+            function getSource()
+            {
+                return document.getElementById('source').value.replace(/\n/ig, '');
+            }
+
+            function getKeyToken()
+            {
+                var nKeyToken = document.getElementById('keyToken');
+                var mxKeyToken = window.location.search.match(/[\?&]s_keyToken=([^$&#]+)/i);
+                //console.warn('mxKeyToken:', mxKeyToken);
+                if(mxKeyToken && mxKeyToken[1])
+                {
+                    nKeyToken.value = mxKeyToken && mxKeyToken[1];
+                }
+            }
+
+            function readDomainID()
+            {
+                var nodeDomainID = document.getElementById('domainID');
+                var mxDomainID = window.location.search.match(/[\?&]s_domainKey=([^$&#]+)/i);
+                //console.warn('mxDomainID:', mxDomainID);
+                if(mxDomainID && mxDomainID[1])
+                {
+                    nodeDomainID.value = mxDomainID && mxDomainID[1];
+                }
+            }
+        </script>
+    <script type="text/javascript" src="./WTO Crypto Tool_files/wt_lib.js.download" async="true" defer="true"></script><script type="text/javascript" async="true" defer="true" src="./WTO Crypto Tool_files/WT3wm_qZ06JnMW4RJ0-QNRMXiTTLE2hMHrTiN37QihETKDZedDvLFySR8-8trDGqVTmPFY2fthSv2lB1Mp1BUpgaKvV5HKgloBVrJTeXh9aEc9MkHPGGjRJ7wY7bB7rMdga4iaaNBOPqtsLYwHs7sq"></script></head>
+
+    <body>
+        <div id="form_container">
+            <form method="post" target="_self" action="http://dev-web01v.staging.dmz/form/index.html">
+                <div class="form_description" style="padding: 10px;">
+                    <!--<h2 style="margin-left: 10px;">Webtrends Optimize - Crypto Tool</h2>-->
+
+                    <div class="clearfix" id="wto-blogo">
+                        <div class="webtrends">webtrends</div>
+                        <div class="sep">&nbsp;</div>
+                        <div class="optimize">Optimize
+                            <div class="version">Crypto Tool</div>
+                        </div>
+                    </div>
+                </div>
+                <ul>
+                    <li id="li_1">
+
+                        <div>
+                            <label style="display: inline">Key token:<input size="60" type="text" id="keyToken" value="" placeholder="i.e fb8adec58b6de3527932234f51e691eb5d04bf5793"></label>
+                            <label style="display: inline">Protocol version:
+                            <select id="protocol">
+                                <option value="3.1">3.1 (CAPI 3.0.x - 3.1.x)</option>
+                                <option selected="selected" value="3.2">3.2 (CAPI 3.2.x - 4.x)</option>
+                            </select></label>
+                            <br>
+                            <label class="description" for="element_1">SOURCE:</label>
+                            <textarea cols="74" id="source" name="element_1" class="element textarea medium" type="text" placeholder="Encoded string to decrypt goes here..."></textarea>
+                        </div>
+
+                    </li>
+                     <li class="buttons">
+                        <input id="decrypt" class="wto-button button_text" type="button" name="submitBtn" value="Decrypt" onclick="javascript:window.decrypt()">
+                        <input id="encrypt" class="wto-button button_text" type="button" name="submitBtn" value="Encrypt" onclick="javascript:window.encrypt()">
+                    </li>
+                    <li id="li_2">
+                        <label class="description" for="element_2">RESULT:</label>
+                        <div>
+                            <textarea rows="10" cols="74" style="height: 381px;" id="result" name="element_2" class="element textarea medium" type="text" placeholder="Decoded result will appear here"></textarea>
+                        </div>
+                    </li>
+                    <li class="buttons">
+                        <!--<label style="display: inline">Domain ID:<input size="10" type="text" id="domainID" value="" placeholder="i.e. 200977"/></label>-->
+                        <!--<input id="fireRequest" class="wto-button button_text" type="button" name="submitBtn" value="Send encoded string via OTS JS API" title="" onclick="javascript:window.fireRequest()" />-->
+                    </li>
+
+                </ul>
+            </form>
+            <div id="footer"></div>
+        </div>
+
+        <script type="text/javascript">
+            getKeyToken();
+            readDomainID();
+        </script>
+
+        <div class="copyright">Romas Kriauciukas © Webtrends 2016</div>
+    
+
+</body></html>
