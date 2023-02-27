@@ -71,6 +71,10 @@ To check currenty working project path/directory, run:
 npm run pwd
 ```
 
+## Note
+
+You may need some CSP disable extension to run the livereload script on some sites. To disable CSP in Chrome, use an extension like: [Disable CSP Extension for Chrome][disable_csp_extension_for_chrome]
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
@@ -79,3 +83,4 @@ npm run pwd
 [webpack-shield]: https://img.shields.io/badge/Webpack-2B3A42?style=for-the-badge&logo=webpack&logoColor=#75AFCC
 [user-js-and-css-shield]: https://img.shields.io/badge/Chrome%20Extension-User%20JavaScript%20and%20CSS-%23FFDD57?style=for-the-badge
 [user-js-and-css-url]: https://chrome.google.com/webstore/detail/user-javascript-and-css/nbhcbdghjpllgmfilhnhkllmkecfmpld?hl=en
+[disable_csp_extension_for_chrome]: https://chrome.google.com/webstore/detail/always-disable-content-se/ffelghdomoehpceihalcnbmnodohkibj?hl=en#:%CB%9C:text=Click%20the%20extension%20icon%20again,CSP%20violations%20to%20a%20URI.
