@@ -2,93 +2,85 @@
 import "./variation-1.scss";
 
 // Variation code running alert! Remove later.
-alert("Hello from AB Testing Boilerplate!");
+alert("Hello from variation code!");
 
 // Start Variation JS
-void (function loadVariation() {
-  const test = {
-    id: "TEST_ID",
-    name: "TEST_NAME",
-    version: "Version 1.0",
-    variation: "Variation 1",
-    polling_element: "POLLING_ELEMENT",
-    init: function () {
-      // Add a test specific classname to the body element
-      document.body.classList.add(
-        test.id,
-        test.id + "--" + test.variation.toLowerCase().split(" ").join("-")
-      );
+void (function loadVariation(timeInFuture) {
+  try {
+    // Main Test object
+    const test = {
+      // Some test specific global variables
+      id: "TEST_ID",
+      name: "TEST_NAME",
+      version: "Version 1.0",
+      variation: "Variation 1",
+      pollingElement: document.querySelector("POLLING_ELEMENT"),
 
-      // Below function calls order is important
-      test.preSetupVariables();
-      test.preSetupEvents();
-      test.mainCSS();
-      test.mainJS();
-      test.postSetupVariables();
-      test.postSetupEvents();
-      test.registerMutationObservers();
-    },
-    preSetupVariables: function () {
-      // Setup test independent/global variables
-    },
-    preSetupEvents: function () {
-      // Setup test independent/global events
-      document.addEventListener("click", test.handleDocumentClicks);
-    },
-    mainCSS: function () {
-      const styleEl = document.createElement("style");
-      styleEl.id = test.id + "__mainCSS";
-      document.head.appendChild(styleEl).textContent = `
+      // Test init
+      init: function () {
+        // Add a test specific classname to the body element
+        document.body.classList.add(test.id);
+
+        // Below function calls order is important
+        test.mainCSS();
+        test.identifyElements();
+        test.mainJS();
+        test.setupEvents();
+      },
+
+      // Main CSS
+      mainCSS: function () {
+        const styleEl = document.createElement("style");
+        styleEl.id = test.id + "__mainCSS";
+        document.head.appendChild(styleEl).textContent = `
         /*
           Write your CSS here, if you don't want to write CSS in a separate CSS file.
         */
       `;
-    },
-    mainJS: function () {
-      /*-----------------------------------------\
-      // 01 - DEFINE VARIABLES
-      /-----------------------------------------*/
+      },
 
-      // Get jQuery reference
-      const $ = jQuery;
+      // Identify control elements in here
+      identifyElements: function () {
+        // Get jQuery reference
+        const $ = jQuery;
 
-      /*-----------------------------------------\
-      // 02 - IDENTIFY ELEMENTS
-      /-----------------------------------------*/
+        // Identify sample element
+        // $(".sample-element").addClass("c-sample-element");
+      },
 
-      // Identify ELEMENT
+      // Main JS
+      mainJS: function () {
+        // Get jQuery reference
+        const $ = jQuery;
 
-      /*-----------------------------------------\
-      // 03 - MANIPULATE ELEMENTS
-      /-----------------------------------------*/
+        // Manipulate elements in here
+      },
 
-      // Manipulate ELEMENT
-    },
-    postSetupVariables: function () {
-      // Setup test dependent variables
-      // test.modal = document.querySelector(".c-exit-intent-modal");
-    },
-    postSetupEvents: function () {
-      // Setup test dependent events
-      // test.modal.addEventListener("click", test.handleModalClick);
-    },
-    handleDocumentClicks: function (clickEvent) {
-      if (clickEvent.target.classList.contains("ELEMENT_CLASS_NAME")) {
-        // Do something on click of element with className ELEMENT_CLASS_NAME
-      }
-    },
-    registerMutationObservers: function () {
-      // Setup mutation observers for this test in here
-    },
-  };
+      // Setup events
+      setupEvents: function () {
+        document.addEventListener("click", test.handleDocumentClicks);
+      },
 
-  // Polling conditions
-  if (
-    !document.querySelector(`.${test.id}`) &&
-    document.querySelector(test.polling_element || "body") &&
-    window.jQuery
-  ) {
-    try {
+      // Handle all document clicks
+      handleDocumentClicks: function (clickEvent) {
+        // Get jQuery reference
+        const $ = jQuery;
+
+        // Handle element with class name ELEMENT_CLASS_NAME click
+        if (clickEvent.target.classList.contains("ELEMENT_CLASS_NAME")) {
+          // Do something on click of element with className ELEMENT_CLASS_NAME
+        }
+      },
+
+      // Register all mutation observers here
+      registerMutationObservers: function () {},
+    };
+
+    // Return if the test ran already!
+    if (document.querySelector(`.${test.id}`)) return;
+
+    // Polling conditions
+    if (test.pollingElement && window.jQuery) {
       // Activate test
       test.init();
 
@@ -100,12 +92,14 @@ void (function loadVariation() {
         "Saabbir:",
         `${test.name}: ${test.variation}: ${test.version}`
       );
-    } catch (error) {
-      // Error log
-      console.log("Saabbir:", `${test.name}: Initialization Error:`, error);
+    } else {
+      Date.now() < timeInFuture
+        ? setTimeout(loadVariation.bind({}, timeInFuture), 25)
+        : console.log("Saabbir:", "loadVariation timed out!");
     }
-  } else {
-    setTimeout(loadVariation, 25);
+  } catch (error) {
+    // Error log
+    console.log("Saabbir: Test Initialization Error:", error);
   }
-})();
+})(Date.now() + 60000);
 // End Variation JS
